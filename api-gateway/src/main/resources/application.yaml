@@ -4,6 +4,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8081/eureka
+jwt:
+  secret: VnD95F5NHPIgnDuKb6GZl81tM+JZLfPT9TC0s7xyJ2I=
 spring:
   application:
     name: api-gateway
@@ -20,6 +22,8 @@ spring:
               uri: lb://user-service
               predicates:
                 - Path=/users/**, /roles/**
+              filters:
+                - name: AuthFilter
             - id: auth-service
               uri: lb://auth-service
               predicates:
