@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-options-table
+      author: kotik
+      changes:
+        - createTable:
+            tableName: options
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: poll_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_option_poll
+                    references: polls(id)
+              - column:
+                  name: text
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order
+                  type: integer
+                  constraints:
+                    nullable: false

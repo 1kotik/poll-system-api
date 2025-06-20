@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: analytics-service
+  liquibase:
+    enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/poll-system-analytics
+    username: postgres
+    password: 5409
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 0
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+

@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-poll-results-table
+      author: kotik
+      changes:
+        - createTable:
+            tableName: poll_results
+            columns:
+              - column:
+                  name: poll_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: total_votes
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: options
+                  type: jsonb
+                  constraints:
+                    nullable: false
+              - column:
+                  name: calculated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
