@@ -20,4 +20,8 @@ spring:
               uri: lb://user-service
               predicates:
                 - Path=/users/**, /roles/**
+            - id: auth-service
+              uri: lb://auth-service
+              predicates:
+                - Path=/auth/**
 
