@@ -2,7 +2,7 @@
   "formatVersion": "1.1",
   "component": {
     "group": "by.kotik",
-    "module": "common",
+    "module": "poll-api-common",
     "version": "1.0.0",
     "attributes": {
       "org.gradle.status": "release"
@@ -25,8 +25,8 @@
       },
       "files": [
         {
-          "name": "common-1.0.0.jar",
-          "url": "common-1.0.0.jar",
+          "name": "poll-api-common-1.0.0.jar",
+          "url": "poll-api-common-1.0.0.jar",
           "size": 9481,
           "sha512": "1beec0a4632bf268274c68dee546311366e46f456cd6867189d26095acb6e6d3ed9a9080413e3a7de9420cc402455fba4915817c530f1a269eb0f5810391621c",
           "sha256": "5770c07d1b605ee159a1d8432c14dcf828cd69724cd0782d17450919d7c9fe86",
@@ -69,8 +69,8 @@
       ],
       "files": [
         {
-          "name": "common-1.0.0.jar",
-          "url": "common-1.0.0.jar",
+          "name": "poll-api-common-1.0.0.jar",
+          "url": "poll-api-common-1.0.0.jar",
           "size": 9481,
           "sha512": "1beec0a4632bf268274c68dee546311366e46f456cd6867189d26095acb6e6d3ed9a9080413e3a7de9420cc402455fba4915817c530f1a269eb0f5810391621c",
           "sha256": "5770c07d1b605ee159a1d8432c14dcf828cd69724cd0782d17450919d7c9fe86",
