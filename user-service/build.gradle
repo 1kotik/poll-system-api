@@ -35,6 +35,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'by.kotik:poll-api-common:1.0.0'
     implementation("org.mapstruct:mapstruct:1.6.3")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0")
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
