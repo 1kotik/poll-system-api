@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-polls-table-1
+      author: kotik
+      changes:
+        - modifyDataType:
+            tableName: polls
+            columnName: start_date
+            newDataType: timestamp with time zone
+        - modifyDataType:
+            tableName: polls
+            columnName: end_date
+            newDataType: timestamp with time zone
+        - modifyDataType:
+            tableName: polls
+            columnName: created_at
+            newDataType: timestamp with time zone
+        - dropColumn:
+            tableName: polls
+            columnName: tags

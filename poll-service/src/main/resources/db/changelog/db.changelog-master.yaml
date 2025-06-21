@@ -3,3 +3,13 @@ databaseChangeLog:
       file: db/changelog/changeset/create-polls-table.yaml
   - include:
       file: db/changelog/changeset/create-options-table.yaml
+  - include:
+      file: db/changelog/changeset/update-polls-table-1.yaml
+  - include:
+      file: db/changelog/changeset/create-tags-table.yaml
+  - include:
+      file: db/changelog/changeset/create-polls-tags-table.yaml
+  - include:
+      file: db/changelog/changeset/update-options-table-1.yaml
+  - include:
+      file: db/changelog/changeset/update-options-table-2.yaml

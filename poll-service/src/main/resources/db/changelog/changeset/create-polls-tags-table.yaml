@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-polls-tags-table
+      author: kotik
+      changes:
+        - createTable:
+            tableName: polls_tags
+            columns:
+              - column:
+                  name: poll_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: tag_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+        - addForeignKeyConstraint:
+            baseTableName: polls_tags
+            baseColumnNames: poll_id
+            referencedTableName: polls
+            referencedColumnNames: id
+            constraintName: fk_polls_tags_poll
+            onDelete: cascade
+        - addForeignKeyConstraint:
+            baseTableName: polls_tags
+            baseColumnNames: tag_id
+            referencedTableName: tags
+            referencedColumnNames: id
+            constraintName: fk_polls_tags_tag
+            onDelete: cascade

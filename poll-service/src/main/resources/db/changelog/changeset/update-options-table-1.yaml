@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-options-table-1
+      author: kotik
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: options
+            constraintName: fk_option_poll
+        - addForeignKeyConstraint:
+            baseTableName: options
+            baseColumnNames: poll_id
+            constraintName: fk_option_poll
+            referencedTableName: polls
+            referencedColumnNames: id
+            onDelete: cascade
