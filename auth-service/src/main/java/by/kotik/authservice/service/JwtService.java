@@ -1,9 +1,9 @@
 package by.kotik.authservice.service;
 
+import by.kotik.authservice.dto.CustomUserDetails;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import util.JwtUtils;
 
@@ -20,8 +20,9 @@ public class JwtService {
     @Value("${jwt.lifetime}")
     private Duration lifetime;
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(CustomUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id", userDetails.getId());
         claims.put("username", userDetails.getUsername());
         claims.put("password", userDetails.getPassword());
         claims.put("roles", userDetails.getAuthorities().stream()

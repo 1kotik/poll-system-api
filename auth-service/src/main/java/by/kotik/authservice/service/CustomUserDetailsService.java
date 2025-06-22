@@ -1,6 +1,7 @@
 package by.kotik.authservice.service;
 
 import by.kotik.authservice.client.UserServiceClient;
+import by.kotik.authservice.dto.CustomUserDetails;
 import dto.UserCredentialsDto;
 import exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserServiceClient userServiceClient;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserCredentialsDto userAuthDto = userServiceClient.getUserByName(username)
-                .orElseThrow(()->new UserNotFoundException("User Not Found"));
-            return new User(userAuthDto.getUsername(), userAuthDto.getPassword(),
-                    userAuthDto.getRoles().stream().map(SimpleGrantedAuthority::new).toList());
+                .orElseThrow(() -> new UserNotFoundException("User Not Found"));
+        return new CustomUserDetails(userAuthDto.getUsername(), userAuthDto.getPassword(),
+                userAuthDto.getRoles().stream().map(SimpleGrantedAuthority::new).toList(), userAuthDto.getId());
     }
 
     public Optional<UserCredentialsDto> getUserByName(String username) {

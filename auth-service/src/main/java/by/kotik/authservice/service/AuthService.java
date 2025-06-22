@@ -1,5 +1,6 @@
 package by.kotik.authservice.service;
 
+import by.kotik.authservice.dto.CustomUserDetails;
 import by.kotik.authservice.dto.UserRegistrationDto;
 import by.kotik.authservice.mapper.UserMapper;
 import by.kotik.authservice.validator.PasswordValidator;
@@ -37,7 +38,7 @@ public class AuthService {
         } catch (AuthenticationException e) {
             throw new GenericAuthenticationException("Invalid credentials");
         }
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userAuthRequestDto.getUsername());
+        CustomUserDetails userDetails = userDetailsService.loadUserByUsername(userAuthRequestDto.getUsername());
         return new TokenDto(jwtService.generateToken(userDetails));
     }
 

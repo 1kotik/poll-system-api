@@ -9,6 +9,7 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.UUID;
 
 public class JwtUtils {
     private JwtUtils(){
@@ -24,6 +25,16 @@ public class JwtUtils {
                 .get("roles", List.class);
     }
 
+    public static UUID getId(String token, String secret) {
+        return parseJws(token, secret).getPayload()
+                .get("id", UUID.class);
+    }
+
+    public static String getUsername(String token, String secret) {
+        return parseJws(token, secret).getPayload()
+                .get("username", String.class);
+    }
+
     public static Jws<Claims> parseJws(String token, String secret) {
         try {
             return Jwts.parser()
@@ -37,5 +48,9 @@ public class JwtUtils {
 
     public static SecretKey getKey(String secret) {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static String extractTokenFromHeader(String authHeader) {
+        return authHeader.replace("Bearer ", "");
     }
 }

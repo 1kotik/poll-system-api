@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'by.kotik'
-version = '1.0.0'
+version = '1.0.1'
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'by.kotik'
             artifactId = 'poll-api-common'
-            version = '1.0.0'
+            version = '1.0.1'
             from components.java
         }
     }

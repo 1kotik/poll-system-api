@@ -3,7 +3,7 @@
   "component": {
     "group": "by.kotik",
     "module": "poll-api-common",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -25,13 +25,13 @@
       },
       "files": [
         {
-          "name": "poll-api-common-1.0.0.jar",
-          "url": "poll-api-common-1.0.0.jar",
-          "size": 9481,
-          "sha512": "1beec0a4632bf268274c68dee546311366e46f456cd6867189d26095acb6e6d3ed9a9080413e3a7de9420cc402455fba4915817c530f1a269eb0f5810391621c",
-          "sha256": "5770c07d1b605ee159a1d8432c14dcf828cd69724cd0782d17450919d7c9fe86",
-          "sha1": "c632643242e1fb8db13f78e7ce4014346856c369",
-          "md5": "85c104a51a874f31ad5f69fc6e515b9f"
+          "name": "poll-api-common-1.0.1.jar",
+          "url": "poll-api-common-1.0.1.jar",
+          "size": 9814,
+          "sha512": "f707589a72e20eacac9a15b4965eb231091a106c47529729688b694e8ebe34bc5294e3db7b579d7cb8898b2e1d20c062c9f931e1b279b2b374f52d6425e91db0",
+          "sha256": "346227105f9a7238e18fb2dea6221b2b3add88d520c13128caf2d1f01bb172f0",
+          "sha1": "4ccdf84a5949d42596b475c7cb15135a36f5bc53",
+          "md5": "ba27c727e102985bff125d7f7611d3c2"
         }
       ]
     },
@@ -69,13 +69,13 @@
       ],
       "files": [
         {
-          "name": "poll-api-common-1.0.0.jar",
-          "url": "poll-api-common-1.0.0.jar",
-          "size": 9481,
-          "sha512": "1beec0a4632bf268274c68dee546311366e46f456cd6867189d26095acb6e6d3ed9a9080413e3a7de9420cc402455fba4915817c530f1a269eb0f5810391621c",
-          "sha256": "5770c07d1b605ee159a1d8432c14dcf828cd69724cd0782d17450919d7c9fe86",
-          "sha1": "c632643242e1fb8db13f78e7ce4014346856c369",
-          "md5": "85c104a51a874f31ad5f69fc6e515b9f"
+          "name": "poll-api-common-1.0.1.jar",
+          "url": "poll-api-common-1.0.1.jar",
+          "size": 9814,
+          "sha512": "f707589a72e20eacac9a15b4965eb231091a106c47529729688b694e8ebe34bc5294e3db7b579d7cb8898b2e1d20c062c9f931e1b279b2b374f52d6425e91db0",
+          "sha256": "346227105f9a7238e18fb2dea6221b2b3add88d520c13128caf2d1f01bb172f0",
+          "sha1": "4ccdf84a5949d42596b475c7cb15135a36f5bc53",
+          "md5": "ba27c727e102985bff125d7f7611d3c2"
         }
       ]
     }

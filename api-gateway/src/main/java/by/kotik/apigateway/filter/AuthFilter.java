@@ -40,7 +40,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new GenericAuthorizationException("No Authorization header found");
         } else {
-            authHeader = authHeader.replace("Bearer ", "");
+            authHeader = JwtUtils.extractTokenFromHeader(authHeader);
         }
         return authHeader;
     }
