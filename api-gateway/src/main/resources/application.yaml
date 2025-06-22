@@ -24,6 +24,12 @@ spring:
                 - Path=/users/**, /roles/**
               filters:
                 - name: AuthFilter
+            - id: poll-service
+              uri: lb://poll-service
+              predicates:
+                - Path=/polls/**
+              filters:
+                - name: AuthFilter
             - id: auth-service
               uri: lb://auth-service
               predicates:

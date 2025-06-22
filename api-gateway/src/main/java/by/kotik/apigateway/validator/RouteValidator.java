@@ -25,7 +25,7 @@ public class RouteValidator {
     }
 
     private List<String> getUserEndpoints() {
-        return List.of();
+        return List.of("/polls");
     }
 
     private List<String> getAdminEndpoints() {
@@ -33,7 +33,7 @@ public class RouteValidator {
     }
 
     private List<String> getForbiddenEndpoints() {
-        return List.of("/users/get-by-username", "/users/get-by-email", "/users/create");
+        return List.of("/users/get-by-username-auth", "/users/get-by-email-auth", "/users/create");
     }
 
 

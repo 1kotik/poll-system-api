@@ -1,12 +1,14 @@
 package by.kotik.pollservice.service;
 
 import by.kotik.pollservice.dto.OptionDto;
+import by.kotik.pollservice.dto.RequiredUserCredentialsDto;
 import by.kotik.pollservice.entity.Option;
 import by.kotik.pollservice.entity.Poll;
 import by.kotik.pollservice.exception.OptionNotFoundException;
 import by.kotik.pollservice.mapper.OptionMapper;
 import by.kotik.pollservice.repository.OptionRepository;
 import by.kotik.pollservice.util.OptionUtils;
+import by.kotik.pollservice.util.UserCredentialsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +27,9 @@ public class OptionService {
     private PollService pollService;
 
     @Transactional
-    public List<OptionDto> saveOptions(String pollId, List<OptionDto> optionDtos) {
+    public List<OptionDto> saveOptions(String pollId, List<OptionDto> optionDtos, RequiredUserCredentialsDto userDto) {
         Poll poll = pollService.getPollEntity(pollId);
+        UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
         optionDtos.addAll(poll.getOptions().stream()
                 .map(option -> optionMapper.optionToOptionDto(option)).toList());
         poll.getOptions().clear();
@@ -52,9 +55,10 @@ public class OptionService {
     }
 
     @Transactional
-    public OptionDto deleteOption(String optionId) {
+    public OptionDto deleteOption(String optionId, RequiredUserCredentialsDto userDto) {
         Option option = optionRepository.findById(UUID.fromString(optionId))
                 .orElseThrow(OptionNotFoundException::new);
+        UserCredentialsUtils.validateUserIds(option.getPoll().getCreatedBy(), userDto);
         OptionDto optionDto = optionMapper.optionToOptionDto(option);
         optionRepository.delete(option);
         Optional<List<Option>> optionsToReorder = optionRepository.findByPollId(optionDto.getPollId());

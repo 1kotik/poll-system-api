@@ -28,12 +28,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Optional<UserCredentialsDto> getUserCredentialsByName(String username) {
+    public Optional<UserCredentialsDto> getUserCredentialsByNameForAuthService(String username) {
         return userRepository.findByUsername(username)
                 .map(userMapper::userToUserCredentialsDto);
     }
 
-    public Optional<UserCredentialsDto> getUserCredentialsAuthByEmail(String email) {
+    public Optional<UserCredentialsDto> getUserCredentialsByEmailForAuthService(String email) {
         return userRepository.findByEmail(email)
                 .map(userMapper::userToUserCredentialsDto);
     }

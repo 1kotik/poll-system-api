@@ -1,5 +1,6 @@
 package util;
 
+import dto.UserCredentialsDto;
 import exception.GenericAuthenticationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -26,8 +27,8 @@ public class JwtUtils {
     }
 
     public static UUID getId(String token, String secret) {
-        return parseJws(token, secret).getPayload()
-                .get("id", UUID.class);
+        return UUID.fromString(parseJws(token, secret).getPayload()
+                .get("id", String.class));
     }
 
     public static String getUsername(String token, String secret) {

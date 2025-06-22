@@ -2,7 +2,6 @@ package by.kotik.userservice.controller;
 
 import by.kotik.userservice.service.UserService;
 import dto.UserCredentialsDto;
-import exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +19,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/get-by-username/{username}")
-    public Optional<UserCredentialsDto> getUserCredentialsByName(@PathVariable String username) {
-        return userService.getUserCredentialsByName(username);
+    @GetMapping("/get-by-username-auth/{username}")
+    public Optional<UserCredentialsDto> getUserCredentialsByNameForAuthService(@PathVariable String username) {
+        return userService.getUserCredentialsByNameForAuthService(username);
     }
 
-    @GetMapping("/get-by-email/{email}")
-    public Optional<UserCredentialsDto> getUserCredentialsAuthByEmail(@PathVariable String email) {
-        return userService.getUserCredentialsAuthByEmail(email);
+    @GetMapping("/get-by-email-auth/{email}")
+    public Optional<UserCredentialsDto> getUserCredentialsByEmailForAuthService(@PathVariable String email) {
+        return userService.getUserCredentialsByEmailForAuthService(email);
     }
 
     @PostMapping("/create")
