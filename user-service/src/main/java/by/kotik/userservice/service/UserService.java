@@ -4,7 +4,6 @@ import by.kotik.userservice.entity.User;
 import by.kotik.userservice.mapper.UserMapper;
 import by.kotik.userservice.repository.UserRepository;
 import dto.UserCredentialsDto;
-import exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

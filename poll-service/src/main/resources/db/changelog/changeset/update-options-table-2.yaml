@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-options-table-2
+      author: kotik
+      changes:
+        - renameColumn:
+            tableName: options
+            oldColumnName: order
+            newColumnName: position
