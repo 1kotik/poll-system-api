@@ -2,6 +2,7 @@ package by.kotik.userservice.controller;
 
 import by.kotik.userservice.service.UserService;
 import dto.UserCredentialsDto;
+import dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,10 @@ public class UserController {
     public ResponseEntity<Void> createUser(@RequestBody UserCredentialsDto userDto) {
         userService.save(userDto);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<UserDto> getByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userService.findByUsername(username));
     }
 }

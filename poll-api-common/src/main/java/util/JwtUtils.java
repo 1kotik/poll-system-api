@@ -3,6 +3,7 @@ package util;
 import dto.UserCredentialsDto;
 import exception.GenericAuthenticationException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class JwtUtils {
-    private JwtUtils(){
+    private JwtUtils() {
 
     }
 
@@ -53,5 +54,17 @@ public class JwtUtils {
 
     public static String extractTokenFromHeader(String authHeader) {
         return authHeader.replace("Bearer ", "");
+    }
+
+    public static boolean isExpired(String token, String secret) {
+        try {
+            Jwts.parser()
+                    .verifyWith(getKey(secret))
+                    .build()
+                    .parseSignedClaims(token);
+        } catch (ExpiredJwtException e) {
+            return true;
+        }
+        return false;
     }
 }
