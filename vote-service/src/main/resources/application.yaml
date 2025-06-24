@@ -11,6 +11,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 0
+jwt:
+  secret: VnD95F5NHPIgnDuKb6GZl81tM+JZLfPT9TC0s7xyJ2I=
 eureka:
   client:
     service-url:
