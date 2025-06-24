@@ -34,4 +34,8 @@ spring:
               uri: lb://auth-service
               predicates:
                 - Path=/auth/**
+            - id: vote-service
+              uri: lb://vote-service
+              predicates:
+                - Path=/votes/**
 
