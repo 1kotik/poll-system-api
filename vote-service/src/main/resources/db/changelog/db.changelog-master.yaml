@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changeset/create-votes-table.yaml
+  - include:
+      file: db/changelog/changeset/update-votes-table-1.yaml

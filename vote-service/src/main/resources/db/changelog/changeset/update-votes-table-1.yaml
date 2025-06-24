@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-votes-table-1
+      author: kotik
+      changes:
+        - modifyDataType:
+            tableName: votes
+            columnName: created_at
+            newDataType: timestamp with time zone
