@@ -1,4 +1,4 @@
-package by.kotik.pollservice.dto;
+package dto;
 
 import lombok.Data;
 

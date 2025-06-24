@@ -1,10 +1,10 @@
 package by.kotik.pollservice.mapper;
 
-import by.kotik.pollservice.dto.PollDto;
 import by.kotik.pollservice.dto.PollWithoutOptionsDto;
 import by.kotik.pollservice.dto.UpdatePollDto;
 import by.kotik.pollservice.entity.Poll;
 import by.kotik.pollservice.entity.Tag;
+import dto.PollDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

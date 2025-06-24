@@ -1,8 +1,8 @@
 package by.kotik.pollservice.mapper;
 
-import by.kotik.pollservice.dto.OptionDto;
 import by.kotik.pollservice.entity.Option;
 import by.kotik.pollservice.entity.Poll;
+import dto.OptionDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

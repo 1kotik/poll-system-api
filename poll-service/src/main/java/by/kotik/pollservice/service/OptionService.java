@@ -1,6 +1,5 @@
 package by.kotik.pollservice.service;
 
-import by.kotik.pollservice.dto.OptionDto;
 import by.kotik.pollservice.dto.RequiredUserCredentialsDto;
 import by.kotik.pollservice.entity.Option;
 import by.kotik.pollservice.entity.Poll;
@@ -9,6 +8,7 @@ import by.kotik.pollservice.mapper.OptionMapper;
 import by.kotik.pollservice.repository.OptionRepository;
 import by.kotik.pollservice.util.OptionUtils;
 import by.kotik.pollservice.util.UserCredentialsUtils;
+import dto.OptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

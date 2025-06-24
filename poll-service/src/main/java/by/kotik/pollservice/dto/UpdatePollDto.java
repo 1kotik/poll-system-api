@@ -1,5 +1,6 @@
 package by.kotik.pollservice.dto;
 
+import dto.OptionDto;
 import lombok.Data;
 
 import java.time.ZonedDateTime;

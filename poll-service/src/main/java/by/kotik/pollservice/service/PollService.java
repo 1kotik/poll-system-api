@@ -1,6 +1,5 @@
 package by.kotik.pollservice.service;
 
-import by.kotik.pollservice.dto.PollDto;
 import by.kotik.pollservice.dto.PollDurationDto;
 import by.kotik.pollservice.dto.RequiredUserCredentialsDto;
 import by.kotik.pollservice.dto.UpdatePollDto;
@@ -11,6 +10,7 @@ import by.kotik.pollservice.repository.PollRepository;
 import by.kotik.pollservice.util.OptionUtils;
 import by.kotik.pollservice.util.UserCredentialsUtils;
 import by.kotik.pollservice.validator.PollValidator;
+import dto.PollDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

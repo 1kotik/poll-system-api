@@ -1,9 +1,9 @@
 package by.kotik.pollservice.controller;
 
-import by.kotik.pollservice.dto.OptionDto;
 import by.kotik.pollservice.dto.RequiredUserCredentialsDto;
 import by.kotik.pollservice.service.OptionService;
 import by.kotik.pollservice.util.UserCredentialsUtils;
+import dto.OptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
