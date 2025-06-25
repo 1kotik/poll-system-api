@@ -1,10 +1,8 @@
 package by.kotik.pollservice.controller;
 
-import by.kotik.pollservice.dto.RequiredUserCredentialsDto;
 import by.kotik.pollservice.service.OptionService;
-import by.kotik.pollservice.util.UserCredentialsUtils;
 import dto.OptionDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +18,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/options")
+@RequiredArgsConstructor
 public class OptionController {
-    @Autowired
-    private OptionService optionService;
+    private final OptionService optionService;
 
     @PostMapping("/add/{pollId}")
     public ResponseEntity<List<OptionDto>> addOptions(@PathVariable UUID pollId, @RequestBody List<OptionDto> options,

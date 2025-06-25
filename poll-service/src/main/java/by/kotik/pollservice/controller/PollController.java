@@ -1,12 +1,10 @@
 package by.kotik.pollservice.controller;
 
 import by.kotik.pollservice.dto.PollDurationDto;
-import by.kotik.pollservice.dto.RequiredUserCredentialsDto;
 import by.kotik.pollservice.dto.UpdatePollDto;
 import by.kotik.pollservice.service.PollService;
-import by.kotik.pollservice.util.UserCredentialsUtils;
 import dto.PollDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +21,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/polls")
+@RequiredArgsConstructor
 public class PollController {
-    @Autowired
-    private PollService pollService;
+    private final PollService pollService;
 
     @PostMapping("/create")
     public ResponseEntity<PollDto> createPoll(@RequestBody PollDto pollDto,

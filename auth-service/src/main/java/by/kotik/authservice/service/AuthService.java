@@ -8,7 +8,7 @@ import dto.TokenDto;
 import dto.UserAuthRequestDto;
 import exception.ExistingCredentialsException;
 import exception.GenericAuthenticationException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -16,19 +16,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private PasswordValidator passwordValidator;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final CustomUserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+    private final PasswordValidator passwordValidator;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public TokenDto createToken(UserAuthRequestDto userAuthRequestDto) {
         try {

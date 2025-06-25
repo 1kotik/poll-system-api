@@ -9,22 +9,22 @@ import by.kotik.pollservice.repository.OptionRepository;
 import by.kotik.pollservice.util.OptionUtils;
 import by.kotik.pollservice.util.UserCredentialsUtils;
 import dto.OptionDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OptionService {
-    @Autowired
-    private OptionRepository optionRepository;
-    @Autowired
-    private OptionMapper optionMapper;
-    @Autowired
-    private PollService pollService;
+    private final OptionRepository optionRepository;
+    private final OptionMapper optionMapper;
+    private final PollService pollService;
 
     @Transactional
     public List<OptionDto> saveOptions(UUID pollId, List<OptionDto> optionDtos, String authHeader) {
@@ -32,16 +32,16 @@ public class OptionService {
         Poll poll = pollService.getPollEntity(pollId);
         UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
         optionDtos.addAll(poll.getOptions().stream()
-                .map(option -> optionMapper.optionToOptionDto(option)).toList());
+                .map(optionMapper::optionToOptionDto).toList());
         poll.getOptions().clear();
         List<Option> options = optionDtos.stream()
-                .map(dto -> optionMapper.optionDtoToOption(dto))
-                .toList();
+                .map(optionMapper::optionDtoToOption)
+                .collect(Collectors.toCollection(ArrayList::new));
         OptionUtils.sortOptionPositions(options);
         poll.getOptions().addAll(options);
         options.forEach(option -> option.setPoll(poll));
         return optionRepository.saveAll(options).stream()
-                .map(option -> optionMapper.optionToOptionDto(option))
+                .map(optionMapper::optionToOptionDto)
                 .toList();
     }
 
@@ -51,7 +51,7 @@ public class OptionService {
                 .filter(list -> !list.isEmpty())
                 .orElseThrow(OptionNotFoundException::new)
                 .stream()
-                .map(option -> optionMapper.optionToOptionDto(option))
+                .map(optionMapper::optionToOptionDto)
                 .toList();
     }
 

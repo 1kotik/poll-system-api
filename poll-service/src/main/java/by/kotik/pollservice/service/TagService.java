@@ -2,6 +2,7 @@ package by.kotik.pollservice.service;
 
 import by.kotik.pollservice.entity.Tag;
 import by.kotik.pollservice.repository.TagRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TagService {
-    @Autowired
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
     @Transactional(readOnly = true)
     public Optional<Tag> findByName(String name) {

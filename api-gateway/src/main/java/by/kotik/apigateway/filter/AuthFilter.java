@@ -15,13 +15,14 @@ import java.util.List;
 
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
-    @Autowired
-    private RouteValidator routeValidator;
+    private final RouteValidator routeValidator;
     @Value("${jwt.secret}")
     private String secret;
 
-    public AuthFilter() {
+    @Autowired
+    public AuthFilter(RouteValidator routeValidator) {
         super(Config.class);
+        this.routeValidator = routeValidator;
     }
 
     @Override
