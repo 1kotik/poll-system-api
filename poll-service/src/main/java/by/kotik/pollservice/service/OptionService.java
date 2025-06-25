@@ -27,7 +27,8 @@ public class OptionService {
     private PollService pollService;
 
     @Transactional
-    public List<OptionDto> saveOptions(String pollId, List<OptionDto> optionDtos, RequiredUserCredentialsDto userDto) {
+    public List<OptionDto> saveOptions(UUID pollId, List<OptionDto> optionDtos, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
         Poll poll = pollService.getPollEntity(pollId);
         UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
         optionDtos.addAll(poll.getOptions().stream()
@@ -45,8 +46,8 @@ public class OptionService {
     }
 
     @Transactional
-    public List<OptionDto> getOptions(String pollId) {
-        return optionRepository.findByPollId(UUID.fromString(pollId))
+    public List<OptionDto> getOptions(UUID pollId) {
+        return optionRepository.findByPollId(pollId)
                 .filter(list -> !list.isEmpty())
                 .orElseThrow(OptionNotFoundException::new)
                 .stream()
@@ -55,8 +56,9 @@ public class OptionService {
     }
 
     @Transactional
-    public OptionDto deleteOption(String optionId, RequiredUserCredentialsDto userDto) {
-        Option option = optionRepository.findById(UUID.fromString(optionId))
+    public OptionDto deleteOption(UUID optionId, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
+        Option option = optionRepository.findById(optionId)
                 .orElseThrow(OptionNotFoundException::new);
         UserCredentialsUtils.validateUserIds(option.getPoll().getCreatedBy(), userDto);
         OptionDto optionDto = optionMapper.optionToOptionDto(option);

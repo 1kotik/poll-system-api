@@ -10,6 +10,6 @@ import java.util.UUID;
 
 @FeignClient("poll-service")
 public interface PollServiceClient {
-    @GetMapping("/polls/get-poll/{pollId}")
+    @GetMapping("/polls/get/{pollId}")
     ResponseEntity<PollDto> getPollDto(@PathVariable UUID pollId);
 }

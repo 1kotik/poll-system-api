@@ -16,32 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/polls")
+@RequestMapping("/options")
 public class OptionController {
     @Autowired
     private OptionService optionService;
 
-    @PostMapping("/add-options/{pollId}")
-    public ResponseEntity<List<OptionDto>> addOptions(@PathVariable String pollId, @RequestBody List<OptionDto> options,
+    @PostMapping("/add/{pollId}")
+    public ResponseEntity<List<OptionDto>> addOptions(@PathVariable UUID pollId, @RequestBody List<OptionDto> options,
                                                       @RequestHeader("Authorization") String authHeader) {
-        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
-        List<OptionDto> allOptionsOfPoll = optionService.saveOptions(pollId, options, userDto);
+        List<OptionDto> allOptionsOfPoll = optionService.saveOptions(pollId, options, authHeader);
         return ResponseEntity.ok(allOptionsOfPoll);
     }
 
-    @GetMapping("/get-options/{pollId}")
-    public ResponseEntity<List<OptionDto>> getOptions(@PathVariable String pollId) {
+    @GetMapping("/get/{pollId}")
+    public ResponseEntity<List<OptionDto>> getOptions(@PathVariable UUID pollId) {
         List<OptionDto> options = optionService.getOptions(pollId);
         return ResponseEntity.ok(options);
     }
 
-    @DeleteMapping("/delete-option/{optionId}")
-    public ResponseEntity<OptionDto> deleteOption(@PathVariable String optionId,
+    @DeleteMapping("/delete/{optionId}")
+    public ResponseEntity<OptionDto> deleteOption(@PathVariable UUID optionId,
                                                   @RequestHeader("Authorization") String authHeader) {
-        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
-        OptionDto option = optionService.deleteOption(optionId, userDto);
+        OptionDto option = optionService.deleteOption(optionId, authHeader);
         return ResponseEntity.ok(option);
     }
 }

@@ -11,7 +11,6 @@ public class UserCredentialsUtils {
     }
 
     public static RequiredUserCredentialsDto getUserIdFromAuthHeader(String authHeader) {
-        System.out.println(Constants.getJwtSecret());
         String token = JwtUtils.extractTokenFromHeader(authHeader);
         return new RequiredUserCredentialsDto(JwtUtils.getId(token, Constants.getJwtSecret()),
                 JwtUtils.getRoles(token, Constants.getJwtSecret()));

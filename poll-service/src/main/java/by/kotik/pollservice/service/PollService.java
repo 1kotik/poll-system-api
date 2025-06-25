@@ -4,6 +4,7 @@ import by.kotik.pollservice.dto.PollDurationDto;
 import by.kotik.pollservice.dto.RequiredUserCredentialsDto;
 import by.kotik.pollservice.dto.UpdatePollDto;
 import by.kotik.pollservice.entity.Poll;
+import by.kotik.pollservice.exception.InvalidPollDuration;
 import by.kotik.pollservice.exception.PollNotFoundException;
 import by.kotik.pollservice.mapper.PollMapper;
 import by.kotik.pollservice.repository.PollRepository;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,7 +34,8 @@ public class PollService {
     private PollValidator pollValidator;
 
     @Transactional
-    public PollDto createPoll(PollDto pollDto, RequiredUserCredentialsDto userDto) {
+    public PollDto createPoll(PollDto pollDto, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
         pollValidator.validatePollDates(pollDto.getStartDate(), pollDto.getEndDate());
         Poll poll = pollMapper.pollDtoToPoll(pollDto);
         Optional.ofNullable(pollDto.getTags())
@@ -47,10 +51,11 @@ public class PollService {
     }
 
     @Transactional
-    public PollDto updatePoll(String pollId, UpdatePollDto pollDto, RequiredUserCredentialsDto userDto) {
+    public PollDto updatePoll(UUID pollId, UpdatePollDto pollDto, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
         pollValidator.validatePollDates(pollDto.getStartDate(), pollDto.getEndDate());
         Poll newPoll = pollMapper.updatePollDtoToPoll(pollDto);
-        Poll oldPoll = pollRepository.findById(UUID.fromString(pollId))
+        Poll oldPoll = pollRepository.findById(pollId)
                 .orElseThrow(() -> new PollNotFoundException(pollId));
         UserCredentialsUtils.validateUserIds(oldPoll.getCreatedBy(), userDto);
         oldPoll.getOptions().clear();
@@ -68,15 +73,16 @@ public class PollService {
     }
 
     @Transactional(readOnly = true)
-    public PollDto getPollById(String pollId) {
-        return pollRepository.findById(UUID.fromString(pollId))
+    public PollDto getPollById(UUID pollId) {
+        return pollRepository.findById(pollId)
                 .map(poll -> pollMapper.pollToPollDto(poll))
                 .orElseThrow(() -> new PollNotFoundException(pollId));
     }
 
     @Transactional
-    public PollDto deletePoll(String pollId, RequiredUserCredentialsDto userDto) {
-        Poll poll = pollRepository.findById(UUID.fromString(pollId))
+    public PollDto deletePoll(UUID pollId, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
+        Poll poll = pollRepository.findById(pollId)
                 .orElseThrow(() -> new PollNotFoundException(pollId));
         UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
         PollDto pollDto = pollMapper.pollToPollDto(poll);
@@ -85,14 +91,15 @@ public class PollService {
     }
 
     @Transactional(readOnly = true)
-    public Poll getPollEntity(String pollId) {
-        return pollRepository.findById(UUID.fromString(pollId))
+    public Poll getPollEntity(UUID pollId) {
+        return pollRepository.findById(pollId)
                 .orElseThrow(() -> new PollNotFoundException(pollId));
     }
 
     @Transactional
-    public PollDto setPollDuration(String pollId, PollDurationDto pollDurationDto, RequiredUserCredentialsDto userDto) {
-        Poll poll = pollRepository.findById(UUID.fromString(pollId))
+    public PollDto setPollDuration(UUID pollId, PollDurationDto pollDurationDto, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
+        Poll poll = pollRepository.findById(pollId)
                 .orElseThrow(() -> new PollNotFoundException(pollId));
         UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
         pollValidator.validatePollDates(
@@ -107,8 +114,9 @@ public class PollService {
     }
 
     @Transactional
-    public PollDto toggleAnonymousParameter(String pollId, RequiredUserCredentialsDto userDto) {
-        Poll poll = pollRepository.findById(UUID.fromString(pollId))
+    public PollDto toggleAnonymousParameter(UUID pollId, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
+        Poll poll = pollRepository.findById(pollId)
                 .orElseThrow(() -> new PollNotFoundException(pollId));
         UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
         poll.setAnonymous(!poll.isAnonymous());
@@ -117,11 +125,46 @@ public class PollService {
     }
 
     @Transactional
-    public PollDto toggleMultipleChoiceParameter(String pollId, RequiredUserCredentialsDto userDto) {
-        Poll poll = pollRepository.findById(UUID.fromString(pollId))
+    public PollDto toggleMultipleChoiceParameter(UUID pollId, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
+        Poll poll = pollRepository.findById(pollId)
                 .orElseThrow(() -> new PollNotFoundException(pollId));
         UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
         poll.setMultipleChoice(!poll.isMultipleChoice());
+        pollRepository.save(poll);
+        return pollMapper.pollToPollDto(poll);
+    }
+
+    @Transactional
+    public PollDto endPoll(UUID pollId, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
+        Poll poll = pollRepository.findById(pollId)
+                .orElseThrow(() -> new PollNotFoundException(pollId));
+        UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
+        if (poll.getEndDate() != null && poll.getEndDate().isBefore(ZonedDateTime.now())) {
+            throw new InvalidPollDuration("Poll have already ended.");
+        }
+        if (poll.getStartDate() == null || poll.getStartDate().isAfter(ZonedDateTime.now())) {
+            throw new InvalidPollDuration("Poll have not started yet.");
+        }
+        poll.setEndDate(ZonedDateTime.now(ZoneId.systemDefault()));
+        pollRepository.save(poll);
+        return pollMapper.pollToPollDto(poll);
+    }
+
+    @Transactional
+    public PollDto startPoll(UUID pollId, String authHeader) {
+        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
+        Poll poll = pollRepository.findById(pollId)
+                .orElseThrow(() -> new PollNotFoundException(pollId));
+        UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
+        if (poll.getStartDate() != null && poll.getStartDate().isBefore(ZonedDateTime.now())) {
+            throw new InvalidPollDuration("Poll have already started.");
+        }
+        if (poll.getEndDate() != null && poll.getEndDate().isBefore(ZonedDateTime.now())) {
+            throw new InvalidPollDuration("Poll have already ended.");
+        }
+        poll.setStartDate(ZonedDateTime.now(ZoneId.systemDefault()));
         pollRepository.save(poll);
         return pollMapper.pollToPollDto(poll);
     }

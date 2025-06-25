@@ -32,9 +32,6 @@ public class VoteValidator {
     }
 
     private boolean invalidVoteTimeCondition(PollDto pollDto) {
-        System.out.println(pollDto.getStartDate() == null);
-        System.out.println(pollDto.getStartDate().isAfter(ZonedDateTime.now()));
-        System.out.println(pollDto.getEndDate() != null);
         return pollDto.getStartDate() == null || pollDto.getStartDate().isAfter(ZonedDateTime.now())
                 || (pollDto.getEndDate() != null && pollDto.getEndDate().isBefore(ZonedDateTime.now()));
     }

@@ -19,64 +19,74 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/polls")
 public class PollController {
     @Autowired
     private PollService pollService;
 
-    @PostMapping("/create-poll")
+    @PostMapping("/create")
     public ResponseEntity<PollDto> createPoll(@RequestBody PollDto pollDto,
                                               @RequestHeader("Authorization") String authHeader) {
-        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
-        PollDto poll = pollService.createPoll(pollDto, userDto);
+        PollDto poll = pollService.createPoll(pollDto, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 
-    @PutMapping("/update-poll/{pollId}")
-    public ResponseEntity<PollDto> updatePoll(@PathVariable String pollId, @RequestBody UpdatePollDto pollDto,
+    @PutMapping("/update/{pollId}")
+    public ResponseEntity<PollDto> updatePoll(@PathVariable UUID pollId, @RequestBody UpdatePollDto pollDto,
                                               @RequestHeader("Authorization") String authHeader) {
-        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
-        PollDto poll = pollService.updatePoll(pollId, pollDto, userDto);
+        PollDto poll = pollService.updatePoll(pollId, pollDto, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 
-    @GetMapping("/get-poll/{pollId}")
-    public ResponseEntity<PollDto> getPollById(@PathVariable String pollId) {
+    @GetMapping("/get/{pollId}")
+    public ResponseEntity<PollDto> getPollById(@PathVariable UUID pollId) {
         PollDto poll = pollService.getPollById(pollId);
         return ResponseEntity.ok().body(poll);
     }
 
-    @DeleteMapping("/delete-poll/{pollId}")
-    public ResponseEntity<PollDto> deletePoll(@PathVariable String pollId,
+    @DeleteMapping("/delete/{pollId}")
+    public ResponseEntity<PollDto> deletePoll(@PathVariable UUID pollId,
                                               @RequestHeader("Authorization") String authHeader) {
-        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
-        PollDto poll = pollService.deletePoll(pollId, userDto);
+        PollDto poll = pollService.deletePoll(pollId, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 
-    @PatchMapping("/set-poll-duration/{pollId}")
-    public ResponseEntity<PollDto> setPollDuration(@PathVariable String pollId,
+    @PatchMapping("/set-duration/{pollId}")
+    public ResponseEntity<PollDto> setPollDuration(@PathVariable UUID pollId,
                                                    @RequestBody PollDurationDto pollDurationDto,
                                                    @RequestHeader("Authorization") String authHeader) {
-        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
-        PollDto poll = pollService.setPollDuration(pollId, pollDurationDto, userDto);
+        PollDto poll = pollService.setPollDuration(pollId, pollDurationDto, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 
     @PatchMapping("/toggle-anonymous/{pollId}")
-    public ResponseEntity<PollDto> toggleAnonymousParameter(@PathVariable String pollId,
+    public ResponseEntity<PollDto> toggleAnonymousParameter(@PathVariable UUID pollId,
                                                             @RequestHeader("Authorization") String authHeader) {
-        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
-        PollDto poll = pollService.toggleAnonymousParameter(pollId, userDto);
+        PollDto poll = pollService.toggleAnonymousParameter(pollId, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 
     @PatchMapping("/toggle-multiple-choice/{pollId}")
-    public ResponseEntity<PollDto> toggleMultipleChoiceParameter(@PathVariable String pollId,
+    public ResponseEntity<PollDto> toggleMultipleChoiceParameter(@PathVariable UUID pollId,
                                                                  @RequestHeader("Authorization") String authHeader) {
-        RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
-        PollDto poll = pollService.toggleMultipleChoiceParameter(pollId, userDto);
+        PollDto poll = pollService.toggleMultipleChoiceParameter(pollId, authHeader);
+        return ResponseEntity.ok().body(poll);
+    }
+
+    @PatchMapping("/end/{pollId}")
+    public ResponseEntity<PollDto> endPoll(@PathVariable UUID pollId,
+                                           @RequestHeader("Authorization") String authHeader) {
+        PollDto poll = pollService.endPoll(pollId, authHeader);
+        return ResponseEntity.ok().body(poll);
+    }
+
+    @PatchMapping("/start/{pollId}")
+    public ResponseEntity<PollDto> startPoll(@PathVariable UUID pollId,
+                                           @RequestHeader("Authorization") String authHeader) {
+        PollDto poll = pollService.startPoll(pollId, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 }

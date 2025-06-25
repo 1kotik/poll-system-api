@@ -2,8 +2,10 @@ package by.kotik.pollservice.exception;
 
 import exception.GenericNotFoundException;
 
+import java.util.UUID;
+
 public class PollNotFoundException extends GenericNotFoundException {
-    public PollNotFoundException(String pollId) {
-        super(String.format("Poll with id %s not found", pollId));
+    public PollNotFoundException(UUID pollId) {
+        super(String.format("Poll with id %s not found", pollId.toString()));
     }
 }

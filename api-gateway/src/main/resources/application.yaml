@@ -27,7 +27,7 @@ spring:
             - id: poll-service
               uri: lb://poll-service
               predicates:
-                - Path=/polls/**
+                - Path=/polls/**, /options/**
               filters:
                 - name: AuthFilter
             - id: auth-service
