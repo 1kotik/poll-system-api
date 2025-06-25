@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: alter-poll-results-table-1
+      author: kotik
+      changes:
+        - dropColumn:
+            tableName: poll_results
+            columnName: options
+        - modifyDataType:
+            tableName: poll_results
+            columnName: calculated_at
+            newDataType: timestamp with time zone
