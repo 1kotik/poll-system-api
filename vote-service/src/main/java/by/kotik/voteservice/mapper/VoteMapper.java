@@ -1,7 +1,7 @@
 package by.kotik.voteservice.mapper;
 
-import by.kotik.voteservice.dto.VoteDto;
 import by.kotik.voteservice.entity.Vote;
+import dto.VoteDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

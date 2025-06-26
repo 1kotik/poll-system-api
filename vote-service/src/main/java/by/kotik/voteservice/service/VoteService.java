@@ -1,12 +1,12 @@
 package by.kotik.voteservice.service;
 
 import by.kotik.voteservice.client.PollServiceClient;
-import by.kotik.voteservice.dto.VoteDto;
 import by.kotik.voteservice.entity.Vote;
 import by.kotik.voteservice.mapper.VoteMapper;
 import by.kotik.voteservice.repository.VoteRepository;
 import by.kotik.voteservice.validator.VoteValidator;
 import dto.PollDto;
+import dto.VoteDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +16,11 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import util.JwtUtils;
 
+import java.time.ZonedDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +33,12 @@ public class VoteService {
     private String secret;
 
     @Transactional(readOnly = true)
-    public List<VoteDto> getByPollId(UUID pollId) {
-        return voteRepository.findByPollId(pollId).stream()
+    public List<VoteDto> getByPollId(UUID pollId, ZonedDateTime startDate, ZonedDateTime endDate) {
+        List<VoteDto> votes = voteRepository.findByPollId(pollId).stream()
                 .map(voteMapper::voteToVoteDto)
+                .sorted(Comparator.comparing(VoteDto::getCreatedAt))
                 .toList();
+        return votes.size() > 1 ? filterVotesByDate(votes, startDate, endDate) : votes;
     }
 
     @Transactional
@@ -66,4 +71,19 @@ public class VoteService {
         }
         return ipAddress;
     }
+
+    private List<VoteDto> filterVotesByDate(List<VoteDto> votes, ZonedDateTime startDate, ZonedDateTime endDate) {
+        startDate = startDate == null ? votes.get(0).getCreatedAt() : startDate;
+        endDate = endDate == null ? votes.get(votes.size() - 1).getCreatedAt() : endDate;
+        ZonedDateTime finalEndDate = endDate;
+        ZonedDateTime finalStartDate = startDate;
+        Predicate<VoteDto> dateFilter = vote ->
+                (vote.getCreatedAt().isBefore(finalEndDate) || vote.getCreatedAt().equals(finalEndDate))
+                && (vote.getCreatedAt().isAfter(finalStartDate) || vote.getCreatedAt().equals(finalStartDate));
+        return votes.stream()
+                .filter(dateFilter)
+                .toList();
+    }
+
+
 }

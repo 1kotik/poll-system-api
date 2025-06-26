@@ -1,4 +1,4 @@
-package by.kotik.voteservice.dto;
+package dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
