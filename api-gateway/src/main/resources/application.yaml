@@ -38,4 +38,12 @@ spring:
               uri: lb://vote-service
               predicates:
                 - Path=/votes/**
+              filters:
+                - name: AuthFilter
+            - id: analytics-service
+              uri: lb://analytics-service
+              predicates:
+                - Path=/analytics/**
+              filters:
+                - name: AuthFilter
 
