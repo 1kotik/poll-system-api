@@ -3,6 +3,7 @@ package by.kotik.voteservice.controller;
 import by.kotik.voteservice.service.VoteService;
 import dto.VoteDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +25,8 @@ public class VoteController {
 
     @GetMapping("/get/{pollId}")
     public ResponseEntity<List<VoteDto>> getVotesByPollId(@PathVariable UUID pollId,
-                                                          @RequestParam(required = false) ZonedDateTime startDate,
-                                                          @RequestParam(required = false) ZonedDateTime endDate) {
+    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDate,
+    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endDate) {
         return ResponseEntity.ok(voteService.getByPollId(pollId, startDate, endDate));
     }
 

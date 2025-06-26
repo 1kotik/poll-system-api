@@ -3,6 +3,7 @@ package by.kotik.pollservice.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -50,7 +51,8 @@ public class Poll {
             joinColumns = @JoinColumn(name = "poll_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags = new HashSet<>();
-    @OneToMany(orphanRemoval = true, mappedBy = "poll", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(orphanRemoval = true, mappedBy = "poll", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Option> options = new ArrayList<>();
 
