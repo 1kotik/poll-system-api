@@ -9,6 +9,7 @@ import dto.PollDto;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,8 +33,10 @@ public class VoteValidator {
     }
 
     private boolean invalidVoteTimeCondition(PollDto pollDto) {
-        return pollDto.getStartDate() == null || pollDto.getStartDate().isAfter(ZonedDateTime.now())
-                || (pollDto.getEndDate() != null && pollDto.getEndDate().isBefore(ZonedDateTime.now()));
+        return pollDto.getStartDate() == null
+                || pollDto.getStartDate().isAfter(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                || (pollDto.getEndDate() != null
+                && pollDto.getEndDate().isBefore(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS)));
     }
 
     private void validateVoteOptions(PollDto pollDto, List<UUID> selectedOptions) {

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -73,7 +74,7 @@ public class PollResultService {
         pollDto.getOptions()
                 .forEach(optionDto -> pollResultDto.getOptions()
                         .add(getOptionResultDto(pollResultDto, optionDto, votesGroupedByOptions)));
-        pollResultDto.setCalculatedAt(ZonedDateTime.now());
+        pollResultDto.setCalculatedAt(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         return pollResultDto;
     }
 

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -145,7 +146,7 @@ public class PollService {
         if (poll.getStartDate() == null || poll.getStartDate().isAfter(ZonedDateTime.now())) {
             throw new InvalidPollDuration("Poll have not started yet.");
         }
-        poll.setEndDate(ZonedDateTime.now(ZoneId.systemDefault()));
+        poll.setEndDate(ZonedDateTime.now(ZoneId.systemDefault()).truncatedTo(ChronoUnit.SECONDS));
         pollRepository.save(poll);
         return pollMapper.pollToPollDto(poll);
     }
@@ -162,7 +163,7 @@ public class PollService {
         if (poll.getEndDate() != null && poll.getEndDate().isBefore(ZonedDateTime.now())) {
             throw new InvalidPollDuration("Poll have already ended.");
         }
-        poll.setStartDate(ZonedDateTime.now(ZoneId.systemDefault()));
+        poll.setStartDate(ZonedDateTime.now(ZoneId.systemDefault()).truncatedTo(ChronoUnit.SECONDS));
         pollRepository.save(poll);
         return pollMapper.pollToPollDto(poll);
     }

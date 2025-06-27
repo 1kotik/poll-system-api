@@ -4,6 +4,7 @@ import by.kotik.pollservice.exception.InvalidPollDuration;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Component
@@ -21,7 +22,7 @@ public class PollValidator {
     }
 
     private void validateDate(ZonedDateTime date) {
-        if (date.isBefore(ZonedDateTime.now())) {
+        if (date.isBefore(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS))) {
             throw new InvalidPollDuration("Illegal date value");
         }
     }
