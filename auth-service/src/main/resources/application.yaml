@@ -10,3 +10,16 @@ eureka:
 jwt:
   secret: VnD95F5NHPIgnDuKb6GZl81tM+JZLfPT9TC0s7xyJ2I=
   lifetime: 10m
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %clr(%-5level) %clr(%logger{36}){cyan} - %clr(%msg%n){faint}"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/auth-service.log
+  logback:
+    rolling policy:
+      max-file-size: 10MB
+      max-history: 30
+      file-name-pattern: logs/auth-service-%d{yyyy-MM-dd}.%i.log
+  level:
+    by.kotik: info

@@ -36,6 +36,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'by.kotik:poll-api-common:1.0.1'
+    implementation("org.springframework.boot:spring-boot-starter-aop:3.5.3")
 }
 
 dependencyManagement {
@@ -47,3 +48,4 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+

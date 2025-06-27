@@ -20,3 +20,16 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8081/eureka
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %clr(%-5level) %clr(%logger{36}){cyan} - %clr(%msg%n){faint}"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/vote-service.log
+  logback:
+    rolling policy:
+      max-file-size: 10MB
+      max-history: 30
+      file-name-pattern: logs/vote-service-%d{yyyy-MM-dd}.%i.log
+  level:
+    by.kotik: info
