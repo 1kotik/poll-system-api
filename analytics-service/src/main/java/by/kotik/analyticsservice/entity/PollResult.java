@@ -26,6 +26,6 @@ public class PollResult {
     @Column(name = "calculated_at", nullable = false)
     private ZonedDateTime calculatedAt;
     @OneToMany(mappedBy = "pollResult", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            orphanRemoval = true, fetch = FetchType.EAGER)
+            orphanRemoval = true)
     private List<OptionResult> options = new ArrayList<>();
 }

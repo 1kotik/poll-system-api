@@ -41,7 +41,7 @@ public class PollResultService {
 
     private Optional<PollResult> getPollFromDbIfDatesAreNull(UUID pollId, ZonedDateTime startDate,
                                                              ZonedDateTime endDate) {
-        return startDate == null && endDate == null ? pollResultRepository.findById(pollId) : Optional.empty();
+        return startDate == null && endDate == null ? pollResultRepository.findByIdWithOptions(pollId) : Optional.empty();
     }
 
     private PollResultDto getPollResultFromVoteService(UUID pollId, ZonedDateTime startDate,
