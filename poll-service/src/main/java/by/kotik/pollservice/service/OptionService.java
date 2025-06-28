@@ -31,15 +31,18 @@ public class OptionService {
         RequiredUserCredentialsDto userDto = UserCredentialsUtils.getUserIdFromAuthHeader(authHeader);
         Poll poll = pollService.getPollEntity(pollId);
         UserCredentialsUtils.validateUserIds(poll.getCreatedBy(), userDto);
-        optionDtos.addAll(poll.getOptions().stream()
-                .map(optionMapper::optionToOptionDto).toList());
-        poll.getOptions().clear();
-        List<Option> options = optionDtos.stream()
+
+        List<Option> options = new ArrayList<>(poll.getOptions());
+        options.addAll(optionDtos.stream()
                 .map(optionMapper::optionDtoToOption)
-                .collect(Collectors.toCollection(ArrayList::new));
+                .peek(option -> option.setPoll(poll))
+                .toList());
+
         OptionUtils.sortOptionPositions(options);
+
+        poll.getOptions().clear();
         poll.getOptions().addAll(options);
-        options.forEach(option -> option.setPoll(poll));
+
         return optionRepository.saveAll(options).stream()
                 .map(optionMapper::optionToOptionDto)
                 .toList();
@@ -61,13 +64,11 @@ public class OptionService {
         Option option = optionRepository.findById(optionId)
                 .orElseThrow(OptionNotFoundException::new);
         UserCredentialsUtils.validateUserIds(option.getPoll().getCreatedBy(), userDto);
+
         OptionDto optionDto = optionMapper.optionToOptionDto(option);
         optionRepository.delete(option);
-        Optional<List<Option>> optionsToReorder = optionRepository.findByPollId(optionDto.getPollId());
-        optionsToReorder.ifPresent(options -> {
-            OptionUtils.sortOptionPositions(options);
-            optionRepository.saveAll(options);
-        });
+        optionRepository.updatePositionsAfterDelete(optionDto.getPollId(), optionDto.getPosition());
+
         return optionDto;
     }
 }

@@ -1,6 +1,7 @@
 package by.kotik.pollservice.controller;
 
 import by.kotik.pollservice.dto.PollDurationDto;
+import by.kotik.pollservice.dto.PollWithoutOptionsDto;
 import by.kotik.pollservice.dto.UpdatePollDto;
 import by.kotik.pollservice.service.PollService;
 import dto.PollDto;
@@ -33,7 +34,7 @@ public class PollController {
     }
 
     @PutMapping("/update/{pollId}")
-    public ResponseEntity<PollDto> updatePoll(@PathVariable UUID pollId, @RequestBody UpdatePollDto pollDto,
+    public ResponseEntity<PollDto> updatePoll(@PathVariable UUID pollId, @RequestBody PollWithoutOptionsDto pollDto,
                                               @RequestHeader("Authorization") String authHeader) {
         PollDto poll = pollService.updatePoll(pollId, pollDto, authHeader);
         return ResponseEntity.ok().body(poll);

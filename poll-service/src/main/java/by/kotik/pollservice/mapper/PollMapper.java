@@ -7,6 +7,7 @@ import by.kotik.pollservice.entity.Tag;
 import dto.PollDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 import java.util.Set;
@@ -23,11 +24,17 @@ public interface PollMapper {
     @Mapping(target = "multipleChoice", defaultValue = "false")
     Poll pollDtoToPoll(PollDto pollDto);
 
-    @Mapping(source="tags", target="tags", qualifiedByName = "extractTagNames")
+    @Mapping(source = "tags", target = "tags", qualifiedByName = "extractTagNames")
     PollDto pollToPollDto(Poll poll);
 
-    @Mapping(source="tags", target="tags", qualifiedByName = "extractTagNames")
-    PollWithoutOptionsDto pollToPollWithoutOptionsDto(Poll poll);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "options", ignore = true)
+    @Mapping(target = "tags", ignore = true)
+    @Mapping(target = "anonymous", defaultValue = "false")
+    @Mapping(target = "multipleChoice", defaultValue = "false")
+    void pollWithoutOptionsDtoToPoll(PollWithoutOptionsDto dto, @MappingTarget Poll poll);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdBy", ignore = true)

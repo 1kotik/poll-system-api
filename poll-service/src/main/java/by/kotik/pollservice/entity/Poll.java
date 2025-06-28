@@ -52,7 +52,7 @@ public class Poll {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags = new HashSet<>();
     @OneToMany(orphanRemoval = true, mappedBy = "poll", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Option> options = new ArrayList<>();
 
