@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @FeignClient("vote-service")
 public interface VoteServiceClient {
-    @GetMapping("/votes/get/{pollId}")
+    @GetMapping("/polls/{pollId}/votes")
     List<VoteDto> getVotes(@PathVariable UUID pollId,
                            @RequestParam(required = false)
                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDate,

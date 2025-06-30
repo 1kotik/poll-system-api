@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/token")
+    @PostMapping
     public ResponseEntity<TokenDto> createToken(@RequestBody UserAuthRequestDto userCredentials) {
         TokenDto token = authService.createToken(userCredentials);
         return ResponseEntity.ok(token);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<Void> registerUser(@RequestBody UserRegistrationDto userRegistrationDto) {
         authService.createNewUser(userRegistrationDto);
         return ResponseEntity.ok().build();

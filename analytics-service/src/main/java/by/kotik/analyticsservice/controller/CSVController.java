@@ -16,12 +16,12 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/analytics")
+@RequestMapping("/polls")
 @RequiredArgsConstructor
 public class CSVController {
     private final CSVService csvService;
 
-    @PostMapping("/csv/{pollId}")
+    @PostMapping("/{pollId}/csv")
     public ResponseEntity<String> getPollResultInCSV(@PathVariable UUID pollId,
                                                 @RequestParam(required = false)
                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

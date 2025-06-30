@@ -2,7 +2,6 @@ package by.kotik.pollservice.controller;
 
 import by.kotik.pollservice.dto.PollDurationDto;
 import by.kotik.pollservice.dto.PollWithoutOptionsDto;
-import by.kotik.pollservice.dto.UpdatePollDto;
 import by.kotik.pollservice.service.PollService;
 import dto.PollDto;
 import lombok.RequiredArgsConstructor;
@@ -26,34 +25,34 @@ import java.util.UUID;
 public class PollController {
     private final PollService pollService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<PollDto> createPoll(@RequestBody PollDto pollDto,
                                               @RequestHeader("Authorization") String authHeader) {
         PollDto poll = pollService.createPoll(pollDto, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 
-    @PutMapping("/update/{pollId}")
+    @PutMapping("/{pollId}")
     public ResponseEntity<PollDto> updatePoll(@PathVariable UUID pollId, @RequestBody PollWithoutOptionsDto pollDto,
                                               @RequestHeader("Authorization") String authHeader) {
         PollDto poll = pollService.updatePoll(pollId, pollDto, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 
-    @GetMapping("/get/{pollId}")
+    @GetMapping("/{pollId}")
     public ResponseEntity<PollDto> getPollById(@PathVariable UUID pollId) {
         PollDto poll = pollService.getPollById(pollId);
         return ResponseEntity.ok().body(poll);
     }
 
-    @DeleteMapping("/delete/{pollId}")
+    @DeleteMapping("/{pollId}")
     public ResponseEntity<PollDto> deletePoll(@PathVariable UUID pollId,
                                               @RequestHeader("Authorization") String authHeader) {
         PollDto poll = pollService.deletePoll(pollId, authHeader);
         return ResponseEntity.ok().body(poll);
     }
 
-    @PatchMapping("/set-duration/{pollId}")
+    @PatchMapping("/duration/{pollId}")
     public ResponseEntity<PollDto> setPollDuration(@PathVariable UUID pollId,
                                                    @RequestBody PollDurationDto pollDurationDto,
                                                    @RequestHeader("Authorization") String authHeader) {

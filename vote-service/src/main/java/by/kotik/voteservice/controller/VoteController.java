@@ -19,18 +19,18 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/votes")
+@RequestMapping("/polls")
 public class VoteController {
     private final VoteService voteService;
 
-    @GetMapping("/get/{pollId}")
+    @GetMapping("/{pollId}/votes")
     public ResponseEntity<List<VoteDto>> getVotesByPollId(@PathVariable UUID pollId,
     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDate,
     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endDate) {
         return ResponseEntity.ok(voteService.getByPollId(pollId, startDate, endDate));
     }
 
-    @PostMapping("/vote/{pollId}")
+    @PostMapping("/{pollId}/votes")
     public ResponseEntity<List<VoteDto>> vote(@PathVariable UUID pollId,
                                               @RequestHeader("Authorization") String authHeader,
                                               @RequestParam(name = "option") List<UUID> selectedOptions) {

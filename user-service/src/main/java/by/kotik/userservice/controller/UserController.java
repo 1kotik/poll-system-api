@@ -20,12 +20,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/get-by-username-auth/{username}")
+    @GetMapping("/auth-name/{username}")
     public Optional<UserCredentialsDto> getUserCredentialsByNameForAuthService(@PathVariable String username) {
         return userService.getUserCredentialsByNameForAuthService(username);
     }
 
-    @GetMapping("/get-by-email-auth/{email}")
+    @GetMapping("/auth-email/{email}")
     public Optional<UserCredentialsDto> getUserCredentialsByEmailForAuthService(@PathVariable String email) {
         return userService.getUserCredentialsByEmailForAuthService(email);
     }

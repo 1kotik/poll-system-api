@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @FeignClient(name = "user-service")
 public interface UserServiceClient {
-    @GetMapping("/users/get-by-username-auth/{username}")
+    @GetMapping("/users/auth-name/{username}")
     Optional<UserCredentialsDto> getUserByName(@PathVariable String username);
 
-    @GetMapping("/users/get-by-email-auth/{email}")
+    @GetMapping("/users/auth-email/{email}")
     Optional<UserCredentialsDto> getUserByEmail(@PathVariable String email);
 
-    @PostMapping("/users/create")
+    @PostMapping("/users")
     ResponseEntity<Void> createUser(@RequestBody UserCredentialsDto userDto);
 }

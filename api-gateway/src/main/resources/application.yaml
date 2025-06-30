@@ -31,6 +31,18 @@ spring:
               enabled: true
               lower-case-service-id: true
           routes:
+            - id: vote-service
+              uri: lb://vote-service
+              predicates:
+                - Path=/polls/*/votes
+              filters:
+                - name: AuthFilter
+            - id: analytics-service
+              uri: lb://analytics-service
+              predicates:
+                - Path=/polls/*/csv, /polls/*/results
+              filters:
+                - name: AuthFilter
             - id: user-service
               uri: lb://user-service
               predicates:
@@ -40,23 +52,11 @@ spring:
             - id: poll-service
               uri: lb://poll-service
               predicates:
-                - Path=/polls/**, /options/**
+                - Path=/polls/**
               filters:
                 - name: AuthFilter
             - id: auth-service
               uri: lb://auth-service
               predicates:
                 - Path=/auth/**
-            - id: vote-service
-              uri: lb://vote-service
-              predicates:
-                - Path=/votes/**
-              filters:
-                - name: AuthFilter
-            - id: analytics-service
-              uri: lb://analytics-service
-              predicates:
-                - Path=/analytics/**
-              filters:
-                - name: AuthFilter
 

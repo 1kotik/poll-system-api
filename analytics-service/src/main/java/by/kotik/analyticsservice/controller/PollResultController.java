@@ -15,12 +15,12 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/analytics")
+@RequestMapping("/polls")
 @RequiredArgsConstructor
 public class PollResultController {
     private final PollResultService pollResultService;
 
-    @PostMapping("/result/{pollId}")
+    @PostMapping("/{pollId}/results")
     public ResponseEntity<PollResultDto> getPollResult(@PathVariable UUID pollId,
                                         @RequestParam(required = false)
                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDate,

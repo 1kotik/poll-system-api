@@ -17,25 +17,24 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/options")
 @RequiredArgsConstructor
 public class OptionController {
     private final OptionService optionService;
 
-    @PostMapping("/add/{pollId}")
+    @PostMapping("/polls/{pollId}/options")
     public ResponseEntity<List<OptionDto>> addOptions(@PathVariable UUID pollId, @RequestBody List<OptionDto> options,
                                                       @RequestHeader("Authorization") String authHeader) {
         List<OptionDto> allOptionsOfPoll = optionService.saveOptions(pollId, options, authHeader);
         return ResponseEntity.ok(allOptionsOfPoll);
     }
 
-    @GetMapping("/get/{pollId}")
+    @GetMapping("/polls/{pollId}/options")
     public ResponseEntity<List<OptionDto>> getOptions(@PathVariable UUID pollId) {
         List<OptionDto> options = optionService.getOptions(pollId);
         return ResponseEntity.ok(options);
     }
 
-    @DeleteMapping("/delete/{optionId}")
+    @DeleteMapping("options/{optionId}")
     public ResponseEntity<OptionDto> deleteOption(@PathVariable UUID optionId,
                                                   @RequestHeader("Authorization") String authHeader) {
         OptionDto option = optionService.deleteOption(optionId, authHeader);
