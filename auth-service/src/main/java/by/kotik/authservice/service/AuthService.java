@@ -22,7 +22,6 @@ public class AuthService {
     private final CustomUserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final PasswordValidator passwordValidator;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -38,8 +37,6 @@ public class AuthService {
     }
 
     public UserDto createNewUser(UserRegistrationDto userRegistrationDto) {
-        passwordValidator.validatePasswordConfirmation(userRegistrationDto.getPassword(),
-                userRegistrationDto.getConfirmPassword());
         userDetailsService.getUserByName(userRegistrationDto.getUsername())
                 .ifPresent(dto -> {
                     throw new ExistingCredentialsException("username");

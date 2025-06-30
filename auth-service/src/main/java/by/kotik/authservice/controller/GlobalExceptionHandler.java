@@ -3,15 +3,13 @@ package by.kotik.authservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.ErrorResponse;
 import exception.AppException;
-
-import exception.GenericAuthenticationException;
-import exception.GenericAuthorizationException;
 import exception.GenericNotFoundException;
 import exception.GenericValidationException;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -43,6 +41,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         return handleAppException(new GenericValidationException("Illegal data format"));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        return handleAppException(new GenericValidationException("Invalid credentials"));
     }
 
     @ExceptionHandler(Throwable.class)
