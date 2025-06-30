@@ -8,13 +8,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.EqualsExclude;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "options")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

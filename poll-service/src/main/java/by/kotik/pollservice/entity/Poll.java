@@ -12,7 +12,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.ZonedDateTime;
@@ -25,6 +27,8 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "polls")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
