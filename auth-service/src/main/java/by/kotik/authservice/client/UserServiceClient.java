@@ -1,6 +1,7 @@
 package by.kotik.authservice.client;
 
 import dto.UserCredentialsDto;
+import dto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,6 @@ public interface UserServiceClient {
     @GetMapping("/users/auth-email/{email}")
     Optional<UserCredentialsDto> getUserByEmail(@PathVariable String email);
 
-    @PostMapping("/users")
-    ResponseEntity<Void> createUser(@RequestBody UserCredentialsDto userDto);
+    @PostMapping("/users/create")
+    ResponseEntity<UserDto> createUser(@RequestBody UserCredentialsDto userDto);
 }

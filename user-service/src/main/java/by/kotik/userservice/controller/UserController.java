@@ -3,6 +3,7 @@ package by.kotik.userservice.controller;
 import by.kotik.userservice.service.UserService;
 import dto.UserCredentialsDto;
 import dto.UserDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/auth-name/{username}")
     public Optional<UserCredentialsDto> getUserCredentialsByNameForAuthService(@PathVariable String username) {
@@ -31,9 +32,9 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createUser(@RequestBody UserCredentialsDto userDto) {
-        userService.save(userDto);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<UserDto> createUser(@RequestBody UserCredentialsDto userDto) {
+        UserDto createdUser = userService.save(userDto);
+        return ResponseEntity.ok(createdUser);
     }
 
     @GetMapping("/{username}")

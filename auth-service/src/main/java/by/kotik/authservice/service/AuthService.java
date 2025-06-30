@@ -6,6 +6,7 @@ import by.kotik.authservice.mapper.UserMapper;
 import by.kotik.authservice.validator.PasswordValidator;
 import dto.TokenDto;
 import dto.UserAuthRequestDto;
+import dto.UserDto;
 import exception.ExistingCredentialsException;
 import exception.GenericAuthenticationException;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class AuthService {
         return new TokenDto(jwtService.generateToken(userDetails));
     }
 
-    public void createNewUser(UserRegistrationDto userRegistrationDto) {
+    public UserDto createNewUser(UserRegistrationDto userRegistrationDto) {
         passwordValidator.validatePasswordConfirmation(userRegistrationDto.getPassword(),
                 userRegistrationDto.getConfirmPassword());
         userDetailsService.getUserByName(userRegistrationDto.getUsername())
@@ -48,7 +49,7 @@ public class AuthService {
                     throw new ExistingCredentialsException("email");
                 });
         userRegistrationDto.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
-        userDetailsService.save(userMapper.userRegistrationDtoToUserCredentialsDto(userRegistrationDto));
+        return userDetailsService.save(userMapper.userRegistrationDtoToUserCredentialsDto(userRegistrationDto));
     }
 
 }

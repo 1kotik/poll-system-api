@@ -3,6 +3,7 @@ package by.kotik.authservice.service;
 import by.kotik.authservice.client.UserServiceClient;
 import by.kotik.authservice.dto.CustomUserDetails;
 import dto.UserCredentialsDto;
+import dto.UserDto;
 import exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userServiceClient.getUserByEmail(email);
     }
 
-    public void save(UserCredentialsDto userAuthDto) {
-        userServiceClient.createUser(userAuthDto);
+    public UserDto save(UserCredentialsDto userAuthDto) {
+        return userServiceClient.createUser(userAuthDto).getBody();
     }
 }

@@ -6,6 +6,7 @@ import by.kotik.userservice.repository.UserRepository;
 import dto.UserCredentialsDto;
 import dto.UserDto;
 import exception.UserNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,21 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final RoleService roleService;
+    private final UserMapper userMapper;
 
     @Transactional
-    public void save(UserCredentialsDto userDto) {
+    public UserDto save(UserCredentialsDto userDto) {
         User user = userMapper.userCredentialsDtoToUser(userDto);
         user.setRoles(new HashSet<>(List.of(roleService.getRoleByName("USER"))));
-        userRepository.save(user);
+        return userMapper.userToUserDto(userRepository.save(user));
     }
 
     @Transactional(readOnly = true)

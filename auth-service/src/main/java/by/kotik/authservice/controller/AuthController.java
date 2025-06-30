@@ -4,6 +4,7 @@ import by.kotik.authservice.dto.UserRegistrationDto;
 import by.kotik.authservice.service.AuthService;
 import dto.TokenDto;
 import dto.UserAuthRequestDto;
+import dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +25,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> registerUser(@RequestBody UserRegistrationDto userRegistrationDto) {
-        authService.createNewUser(userRegistrationDto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UserDto> registerUser(@RequestBody UserRegistrationDto userRegistrationDto) {
+        UserDto userDto = authService.createNewUser(userRegistrationDto);
+        return ResponseEntity.ok(userDto);
     }
 }
