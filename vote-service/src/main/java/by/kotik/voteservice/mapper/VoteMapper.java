@@ -10,8 +10,7 @@ public interface VoteMapper {
     VoteDto voteToVoteDto(Vote vote);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt",
-            expression = "java(java.time.ZonedDateTime.now().truncatedTo(java.time.temporal.ChronoUnit.SECONDS))")
+    @Mapping(target = "createdAt", ignore = true)
     Vote voteDtoToVote(VoteDto voteDto);
 
 }

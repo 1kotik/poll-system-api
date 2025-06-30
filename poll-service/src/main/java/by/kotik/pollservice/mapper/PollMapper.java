@@ -18,8 +18,7 @@ public interface PollMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "tags", ignore = true)
-    @Mapping(target = "createdAt",
-            expression = "java(java.time.ZonedDateTime.now().truncatedTo(java.time.temporal.ChronoUnit.SECONDS))")
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "anonymous", defaultValue = "false")
     @Mapping(target = "multipleChoice", defaultValue = "false")
     Poll pollDtoToPoll(PollDto pollDto);

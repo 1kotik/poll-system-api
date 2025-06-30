@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class Poll {
     @Column(name = "created_by", nullable = false)
     private UUID createdBy;
     @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
     private ZonedDateTime createdAt;
     @ToString.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

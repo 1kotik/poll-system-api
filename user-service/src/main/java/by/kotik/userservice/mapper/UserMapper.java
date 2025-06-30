@@ -16,7 +16,7 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "roles", ignore = true)
-    @Mapping(target = "createdAt", expression = "java(java.time.Instant.now())")
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "isActive", constant = "true")
     User userCredentialsDtoToUser(UserCredentialsDto userDto);
 

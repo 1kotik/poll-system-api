@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class PollResult {
     @Column(name = "total_votes", nullable = false)
     private int totalVotes;
     @Column(name = "calculated_at", nullable = false)
+    @CreationTimestamp
     private ZonedDateTime calculatedAt;
     @OneToMany(mappedBy = "pollResult", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true)

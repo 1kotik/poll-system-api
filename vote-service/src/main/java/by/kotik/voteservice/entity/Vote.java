@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -31,6 +32,7 @@ public class Vote {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
     @Column(name="created_at", nullable = false)
+    @CreationTimestamp
     private ZonedDateTime createdAt;
     @Column(name = "ip_address", nullable = false)
     private String ipAddress;

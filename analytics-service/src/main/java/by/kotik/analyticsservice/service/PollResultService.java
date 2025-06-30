@@ -74,7 +74,6 @@ public class PollResultService {
         pollDto.getOptions()
                 .forEach(optionDto -> pollResultDto.getOptions()
                         .add(getOptionResultDto(pollResultDto, optionDto, votesGroupedByOptions)));
-        pollResultDto.setCalculatedAt(ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         return pollResultDto;
     }
 
