@@ -9,18 +9,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.EqualsExclude;
-import org.apache.commons.lang3.builder.HashCodeExclude;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "options")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,5 +33,6 @@ public class Option {
     private int position;
     @ManyToOne
     @JoinColumn(name = "poll_id", nullable = false)
+    @ToString.Exclude
     private Poll poll;
 }
